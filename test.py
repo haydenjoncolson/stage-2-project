@@ -14,75 +14,66 @@ hard_answers = ['tuples', 'immutable', 'assertions', 'output']
 
 
 
-def select_difficulty(): ## Takes in no inputs, prompts the user to select a level, returns the level selected
-	user_difficulty = raw_input('Select a difficulty - easy / medium / hard: ') #Prompts the user
-	levels = ['easy', 'medium', 'hard'] #Levels of Difficulty
-	while user_difficulty not in levels: #While the user input is not one of the levels, error message is given and the user is prompteda again.
+
+def select_level(): 																	## Takes in no inputs, prompts the user to select a level, returns the level selected
+	levels = ['easy', 'medium', 'hard'] 												#Levels of Difficulty
+	selection = raw_input('Select a level - easy / medium / hard: ')					#Prompts the user
+	while selection.lower() not in levels: 														#While the user input is not one of the levels, error message is given and the user is prompteda again.
 		print 'Incorrect selection. Please check your spelling.'
-		user_difficulty = raw_input('Select a difficulty - easy / medium / hard: ')	
-	if user_difficulty.lower() == 'easy': #returns easy level
-		return user_difficulty 
-	elif user_difficulty.lower() == 'medium': #return medium level
-		return user_difficulty	
-	elif user_difficulty.lower() == 'hard': #returns hard level
-		return user_difficulty	 
-	
-def display_quiz(level): #takes in level selected, outputs the quiz	 
-		if level == "easy":
-			print easy_quiz
-			return easy_answers
+		selection = raw_input('Select a level - easy / medium / hard: ')
+	if selection == 'easy': #returns easy level
+		return 'easy'
+	elif selection == 'medium': #return medium level
+		return 'medium'
+	elif selection == 'hard': #returns hard level
+		return 'hard'
+
+def show_quiz(level): #takes in level quiz selected, outputs the quiz and answers
+		if level == 'easy':
+			return easy_quiz
 		elif level == 'medium':
-			print medium_quiz
-			return medium_answers
+			return medium_quiz
 		elif level == 'hard':
-			print hard_quiz
-			return hard_answers
-
-
-
-			#print easy_quiz
-			#user_answer = raw_input('Replacement for (' + placeholder[index] + '): ')
-			#if check_answer(user_answer, easy_answers):
-				#index  =  index + 1
-			#else:
-			#	return False
-
-
-			
-
-				
-def guess_sequence(answer_key):
-	index = 0
-	user_answer = raw_input('Question ' + str(index + 1) + ': ')
-	while index < 3:
-		if user_answer.lower() in answer_key[index]:
-			index = index + 1
-		else:
-			return False
-
-
-
-#		print easy_quiz
-#		user_answer = raw_input('Replacement for (' + placeholder[index] + '): ')		
-#
-#	
-#		if level == "hard":
-#			print easy_quiz
-#			user_answer = raw_input('Replacement for (' + placeholder[index] + '): ')
-##	level = select_difficulty
-
-#	while answer.lower 
-
-
-def play_game(): #takes no inputs
-	level = select_difficulty() #level is returned from select_difficulty function
-	answer_key = display_quiz(level) #takes in level as input, prints the selected quiz, returns answer key
-	guess_sequence(answer_key) 
-	
+			return hard_quiz
 
 
 
 
-		
 
-play_game()
+
+
+def ask_question(quiz, answers):
+		index = 0
+		while index < len(answers):
+			print quiz
+			user_answer = raw_input('Answer: ')
+			while user_answer not in answers:
+				print 'Wrong answer! Please try again.'
+				user_answer = raw_input('Answer: ')
+			if user_answer == answers[index]:
+				quiz.replace(placeholder[index], answers[index])
+				index = index + 1
+
+def check_answer(user_answer, answer_key):
+	for answer in answer_key:
+		index = 0
+
+def get_answers(quiz):
+	if quiz == easy_quiz:
+		return easy_answers
+	elif quiz == medium_quiz:
+		return medium_answers
+	elif quiz == hard_quiz:
+		return hard_answers
+
+
+
+
+def begin_quiz(): #takes no inputs
+		level = select_level() #Level Selected from function
+		quiz = show_quiz(level)
+		quiz_answers = get_answers(quiz)
+		ask_question(quiz, quiz_answers)
+
+
+begin_quiz()
