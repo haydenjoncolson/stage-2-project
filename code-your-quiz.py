@@ -1,0 +1,87 @@
+
+placeholder = ['_1_','_2_','_3_','_4_'] #Placeholders will be replaced by correct answers
+
+##
+
+easy_quiz = placeholder[0] + ' is a general-purpose interpreted, interactive, objected-oriented, high-level programming ' + placeholder[1] + '. The Python language has many similarities to ' + placeholder[2] + ', C, and ' + placeholder[3] + '.'
+easy_answers = ['Python', 'language', 'Perl', 'Java']
+medium_quiz = (placeholder[0] + ' is an object which allows a programmer to traverse through all the ' + placeholder[1] + ' of a collection, regardless of its specific implementation. A ' + placeholder[2] + ' is a function that produces or yields a sequence of values using yield ' + placeholder[3] + '.')
+medium_answers = ['Iterator', 'elements', 'generator', 'method']
+hard_quiz = ('A ' + placeholder[0] + ' is a sequence of ' + placeholder[1] + ' Python objects. Programmers often place ' + placeholder[2] + ' at the start of a function to check for valid input, and after a function call to check for valid ' + placeholder[3] + '.')
+hard_answers = ['tuples', 'immutable', 'assertions', 'output']
+
+def select_level(): 																	## Takes in no inputs, prompts the user to select a level, returns the level selected
+	levels = ['easy', 'medium', 'hard'] 												#Levels of Difficulty
+	selection = raw_input('Select a level - easy / medium / hard: ')					#Prompts the user
+	while selection.lower() not in levels: 												#While the user input is not one of the levels, error message is given and the user is prompteda again.
+		print 'Incorrect selection. Please check your spelling.'
+		selection = raw_input('Select a level - easy / medium / hard: ')
+	if selection == 'easy': #returns easy level
+		return 'easy'
+	elif selection == 'medium': #return medium level
+		return 'medium'
+	elif selection == 'hard': #returns hard level
+		return 'hard'
+
+def show_quiz(level): #takes in level quiz selected, outputs the quiz and answers
+		if level == 'easy':
+			return easy_quiz
+		elif level == 'medium':
+			return medium_quiz
+		elif level == 'hard':
+			return hard_quiz
+
+def ask_question(quiz, answers,attempts):
+		count = 1
+		index = 0
+		while index < 4:
+			print quiz
+			user_answer = raw_input('Answer: ')
+			if user_answer == answers[index]:
+				quiz = quiz.replace(placeholder[index], answers[index])
+				index = index + 1
+			else:
+				if count==attempts:
+					print 'Game Over!'
+					exit()
+				print 'Wromg answer. Please try again.'
+				count = count + 1
+		if index == 4:
+			print quiz
+			print 'You won!'
+			exit()
+
+def check_answer(user_answer, answer_key):
+	for answer in answer_key:
+		index = 0
+
+def get_answers(quiz): 	#inputs the quiz, returns answer key
+	if quiz == easy_quiz:
+		return easy_answers
+	elif quiz == medium_quiz:
+		return medium_answers
+	elif quiz == hard_quiz:
+		return hard_answers
+
+
+
+
+def begin_quiz(): #takes no inputs
+		level = select_level() #Level Selected from function
+		quiz = show_quiz(level)
+		quiz_answers = get_answers(quiz)
+		attempts = (int)(raw_input('How many attempts would you like? '))
+		ask_question(quiz, quiz_answers,attempts)
+
+
+def play_game(): #
+	i = 1
+	while i <= 3:
+		begin_quiz()
+		completed_levels = raw_input('Enter 1 if you want to play')
+		if completed_levels != 1:
+			exit()
+		i = i + 1
+	return
+
+play_game()
